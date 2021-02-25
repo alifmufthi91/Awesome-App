@@ -7,6 +7,7 @@ import com.example.awesomeapp.data.model.GetPhotosResponse
 import com.example.awesomeapp.data.model.Photo
 import com.example.awesomeapp.data.source.ApiResponse
 import com.example.awesomeapp.data.source.RemoteDataSource
+import com.example.awesomeapp.utils.EspressoIdlingResource
 import com.google.android.material.snackbar.Snackbar
 import retrofit2.Call
 import retrofit2.Response
@@ -25,6 +26,7 @@ class HomeRepository private constructor(private val remoteDataSource: RemoteDat
 
     override fun getCuratedPhotos(perPage: Int): LiveData<ApiResponse> {
         val photosLiveData = MutableLiveData<ApiResponse>()
+        EspressoIdlingResource.increment()
         remoteDataSource.getCuratedPhotos(perPage, object : RemoteDataSource.LoadCuratedPhotosCallback{
             override fun onResponse(
                     call: Call<GetPhotosResponse>,
@@ -34,11 +36,13 @@ class HomeRepository private constructor(private val remoteDataSource: RemoteDat
                 if(result != null){
                     photosLiveData.postValue(ApiResponse(result.photos))
                 }
+                EspressoIdlingResource.decrement()
             }
 
             override fun onFailure(call: Call<GetPhotosResponse>, t: Throwable) {
                 Log.d("onFailure", t.localizedMessage)
                 photosLiveData.postValue(ApiResponse(t))
+                EspressoIdlingResource.decrement()
             }
 
         })
@@ -47,6 +51,7 @@ class HomeRepository private constructor(private val remoteDataSource: RemoteDat
 
     override fun getSearchedPhotos(query: String, page: Int): LiveData<ApiResponse> {
         val photosLiveData = MutableLiveData<ApiResponse>()
+        EspressoIdlingResource.increment()
         remoteDataSource.getSearchedPhotos(query, page, object : RemoteDataSource.LoadSearchedPhotosCallback{
             override fun onResponse(
                     call: Call<GetPhotosResponse>,
@@ -56,11 +61,13 @@ class HomeRepository private constructor(private val remoteDataSource: RemoteDat
                 if(result != null){
                     photosLiveData.postValue(ApiResponse(result.photos))
                 }
+                EspressoIdlingResource.decrement()
             }
 
             override fun onFailure(call: Call<GetPhotosResponse>, t: Throwable) {
                 Log.d("onFailure", t.localizedMessage)
                 photosLiveData.postValue(ApiResponse(t))
+                EspressoIdlingResource.decrement()
             }
 
         })
