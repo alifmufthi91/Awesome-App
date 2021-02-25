@@ -5,4 +5,5 @@
     <string name="lorem_ipsum_dolor_sit_amet">Lorem Ipsum Dolor Sit Amet</string>
     <string name="list">List</string>
     <string name="grid">Grid</string>
+    <string name="detail_photo">Detail Photo</string>
 </resources>

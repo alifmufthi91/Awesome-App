@@ -1,12 +1,13 @@
-package com.example.awesomeapp
+package com.example.awesomeapp.home
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import com.example.awesomeapp.model.Photo
-import com.example.awesomeapp.networking.RemoteDataSource
+import com.example.awesomeapp.data.model.Photo
+import com.example.awesomeapp.data.source.RemoteDataSource
 
 class HomeViewModel: ViewModel() {
 
+    var isListMode: Boolean = true
     private val remoteDataSource = RemoteDataSource.getInstance()
     private val homeRepository: HomeRepository = HomeRepository.getInstance(remoteDataSource)
 

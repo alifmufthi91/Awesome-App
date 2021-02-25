@@ -1,7 +1,7 @@
-package com.example.awesomeapp
+package com.example.awesomeapp.home
 
 import androidx.lifecycle.LiveData
-import com.example.awesomeapp.model.Photo
+import com.example.awesomeapp.data.model.Photo
 
 interface HomeDataSource {
 

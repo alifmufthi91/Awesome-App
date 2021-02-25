@@ -1,14 +1,15 @@
-package com.example.awesomeapp
+package com.example.awesomeapp.home
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.awesomeapp.model.GetPhotosResponse
-import com.example.awesomeapp.model.Photo
-import com.example.awesomeapp.networking.RemoteDataSource
+import com.example.awesomeapp.data.model.GetPhotosResponse
+import com.example.awesomeapp.data.model.Photo
+import com.example.awesomeapp.data.source.RemoteDataSource
 import retrofit2.Call
 import retrofit2.Response
 
-class HomeRepository private constructor(private val remoteDataSource: RemoteDataSource): HomeDataSource{
+class HomeRepository private constructor(private val remoteDataSource: RemoteDataSource): HomeDataSource {
 
     companion object {
         @Volatile
@@ -23,8 +24,8 @@ class HomeRepository private constructor(private val remoteDataSource: RemoteDat
         val photosLiveData = MutableLiveData<ArrayList<Photo>>()
         remoteDataSource.getCuratedPhotos(perPage, object : RemoteDataSource.LoadCuratedPhotosCallback{
             override fun onResponse(
-                call: Call<GetPhotosResponse>,
-                response: Response<GetPhotosResponse>
+                    call: Call<GetPhotosResponse>,
+                    response: Response<GetPhotosResponse>
             ) {
                 val result = response.body()
                 if(result != null){
@@ -33,6 +34,7 @@ class HomeRepository private constructor(private val remoteDataSource: RemoteDat
             }
 
             override fun onFailure(call: Call<GetPhotosResponse>, t: Throwable) {
+                Log.d("onFailure", t.localizedMessage)
             }
 
         })
@@ -43,8 +45,8 @@ class HomeRepository private constructor(private val remoteDataSource: RemoteDat
         val photosLiveData = MutableLiveData<ArrayList<Photo>>()
         remoteDataSource.getSearchedPhotos(query, object : RemoteDataSource.LoadSearchedPhotosCallback{
             override fun onResponse(
-                call: Call<GetPhotosResponse>,
-                response: Response<GetPhotosResponse>
+                    call: Call<GetPhotosResponse>,
+                    response: Response<GetPhotosResponse>
             ) {
                 val result = response.body()
                 if(result != null){
@@ -53,6 +55,7 @@ class HomeRepository private constructor(private val remoteDataSource: RemoteDat
             }
 
             override fun onFailure(call: Call<GetPhotosResponse>, t: Throwable) {
+                Log.d("onFailure", t.localizedMessage)
             }
 
         })

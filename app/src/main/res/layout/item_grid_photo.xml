@@ -2,8 +2,10 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@color/white"
     android:orientation="vertical">
     <ImageView
+        android:id="@+id/iv_grid_photo"
         android:layout_width="match_parent"
         android:layout_height="220dp"
         android:layout_margin="8dp"
@@ -11,11 +13,15 @@
         android:src="@drawable/ic_image_not_supported_black"/>
 
     <TextView
-        android:id="@+id/tv_row_item"
+        android:id="@+id/tv_grid_item"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="8dp"
+        android:fontFamily="@font/crimson_text"
+        android:textAlignment="center"
         android:text="@string/lorem_ipsum_dolor_sit_amet"
-        android:textSize="22sp"/>
+        android:textColor="#000000"
+        android:textSize="26sp"
+        android:textStyle="italic" />
 
 </LinearLayout>

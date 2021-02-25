@@ -1,18 +1,17 @@
-package com.example.awesomeapp
+package com.example.awesomeapp.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.awesomeapp.databinding.ItemRowPhotoBinding
-import com.example.awesomeapp.model.Photo
+import com.example.awesomeapp.data.model.Photo
 import java.util.*
 import kotlin.collections.ArrayList
 
-class ListPhotoAdapter(): RecyclerView.Adapter<ListPhotoAdapter.ListViewHolder>() {
+class ListPhotoAdapter : RecyclerView.Adapter<ListPhotoAdapter.ListViewHolder>() {
+    private var onItemClickCallback: OnItemClickCallback? = null
     private var listPhoto = ArrayList<Photo>()
 
     fun setData(items: ArrayList<Photo>) {
@@ -23,18 +22,26 @@ class ListPhotoAdapter(): RecyclerView.Adapter<ListPhotoAdapter.ListViewHolder>(
 
     fun getData(): ArrayList<Photo> = listPhoto
 
+    fun setOnItemClickCallback(onItemClickCallback: OnItemClickCallback) {
+        this.onItemClickCallback = onItemClickCallback
+    }
+
     inner class ListViewHolder(private val binding: ItemRowPhotoBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(photo: Photo){
+        fun bind(photo: Photo) {
             with(binding) {
                 Glide.with(itemView.context)
-                    .load(photo.src.medium)
-                    .into(ivRowItem)
+                        .load(photo.src.medium)
+                        .diskCacheStrategy(DiskCacheStrategy.DATA)
+                        .into(ivRowItem)
                 val title = photo.url
-                val titleRemovedPrexix = title.replace("https://www.pexels.com/photo/","")
-                val titleRemovedId = titleRemovedPrexix.replace(photo.id.toString()+"/","")
-                val titleFormatted = titleRemovedId.replace("-"," ").capitalize(Locale.ROOT)
+                val titleRemovedPrexix = title.replace("https://www.pexels.com/photo/", "")
+                val titleRemovedId = titleRemovedPrexix.replace(photo.id.toString() + "/", "")
+                val titleFormatted = titleRemovedId.replace("-", " ").capitalize(Locale.ROOT)
                 tvRowItem.text = titleFormatted
+                itemView.setOnClickListener {
+                    onItemClickCallback?.onItemClicked(photo, titleFormatted)
+                }
             }
         }
     }
@@ -50,4 +57,7 @@ class ListPhotoAdapter(): RecyclerView.Adapter<ListPhotoAdapter.ListViewHolder>(
 
     override fun getItemCount(): Int = listPhoto.size
 
+    interface OnItemClickCallback {
+        fun onItemClicked(data: Photo, title: String)
+    }
 }

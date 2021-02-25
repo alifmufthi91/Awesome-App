@@ -1,6 +1,6 @@
-package com.example.awesomeapp.networking
+package com.example.awesomeapp.data.source
 
-import com.example.awesomeapp.model.GetPhotosResponse
+import com.example.awesomeapp.data.model.GetPhotosResponse
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Header

@@ -1,7 +1,7 @@
-package com.example.awesomeapp.networking
+package com.example.awesomeapp.data.source
 
 import com.example.awesomeapp.BuildConfig
-import com.example.awesomeapp.model.GetPhotosResponse
+import com.example.awesomeapp.data.model.GetPhotosResponse
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Callback
