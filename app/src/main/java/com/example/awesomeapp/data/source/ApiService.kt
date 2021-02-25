@@ -12,5 +12,5 @@ interface ApiService {
     fun curated(@Header("Authorization") auth: String, @Query("per_page") perPage: Int): Call<GetPhotosResponse>
 
     @GET("search")
-    fun search(@Header("Authorization") auth: String, @Query("query") query: String): Call<GetPhotosResponse>
+    fun search(@Header("Authorization") auth: String, @Query("query") query: String, @Query("page") page: Int): Call<GetPhotosResponse>
 }

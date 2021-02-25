@@ -5,6 +5,7 @@ import android.os.Bundle
 import com.example.awesomeapp.databinding.ActivityMainBinding
 import com.example.awesomeapp.home.HomeFragment
 
+//Activity Utama
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding

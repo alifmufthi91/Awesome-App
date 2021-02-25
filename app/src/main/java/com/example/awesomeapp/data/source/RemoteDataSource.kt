@@ -9,6 +9,8 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 class RemoteDataSource {
+
+    //Inisialisasi retrofit client
     private val okHttpClient = OkHttpClient.Builder()
         .addInterceptor(HttpLoggingInterceptor().apply {
             level = HttpLoggingInterceptor.Level.BODY
@@ -19,7 +21,7 @@ class RemoteDataSource {
         .client(okHttpClient)
         .addConverterFactory(GsonConverterFactory.create())
     private val retrofit = builder.build()
-    val client: ApiService = retrofit.create(ApiService::class.java)
+    private val client: ApiService = retrofit.create(ApiService::class.java)
 
 
     companion object {
@@ -31,8 +33,8 @@ class RemoteDataSource {
             }
     }
 
-    fun getSearchedPhotos(query: String, callback: LoadSearchedPhotosCallback){
-        val call = client.search(BuildConfig.API_KEY, query)
+    fun getSearchedPhotos(query: String, page: Int, callback: LoadSearchedPhotosCallback){
+        val call = client.search(BuildConfig.API_KEY, query, page)
         call.enqueue(callback)
     }
 

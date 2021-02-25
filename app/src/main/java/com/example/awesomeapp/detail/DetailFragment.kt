@@ -25,8 +25,10 @@ class DetailFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_detail, container, false)
+        //Inisialisasi view binding pada fragment Detail
         val binding = FragmentDetailBinding.bind(view)
         fragmentDetailBinding = binding
+
         setUpToolbar()
         return view
     }
@@ -34,14 +36,16 @@ class DetailFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+        //Inisialisasi view model untuk fragment detail
         detailViewModel = ViewModelProvider(
                 this,
                 ViewModelProvider.NewInstanceFactory()
         )[DetailViewModel::class.java]
 
+        //Ambil data yang dikirim dari fragment sebelumnya
         if (arguments != null) {
-            val titleFromBundle = arguments?.getString(EXTRA_TITLE)
-            detailViewModel.title = titleFromBundle
+            val photographerUrlFromBundle = arguments?.getString(EXTRA_PHOTOGRAPHER_URL)
+            detailViewModel.photographerUrl = photographerUrlFromBundle
             val photographerFromBundle = arguments?.getString(EXTRA_PHOTOGRAPHER)
             detailViewModel.photographer = photographerFromBundle
             val imageUriFromBundle = arguments?.getString(EXTRA_IMAGE_URI)
@@ -51,6 +55,7 @@ class DetailFragment : Fragment() {
         setUpDetail()
     }
 
+    //Menambahkan back button pada toolbar
     private fun setUpToolbar() {
         val toolbar = fragmentDetailBinding!!.toolbarDetail
         toolbar.setTitleTextColor(Color.WHITE)
@@ -60,21 +65,22 @@ class DetailFragment : Fragment() {
         }
     }
 
+    //Tampilkan data yang diambil
     private fun setUpDetail() {
         with(fragmentDetailBinding!!) {
             Glide.with(requireContext())
                     .load(detailViewModel.imageUri)
                     .diskCacheStrategy(DiskCacheStrategy.DATA)
                     .into(ivDetailPhoto)
-            tvDetailTitle.text = detailViewModel.title
-            tvDetailPhotographer.text = "By: ${detailViewModel.photographer}"
+            tvDetailTitle.text = detailViewModel.photographer
+            tvDetailPhotographer.text = detailViewModel.photographerUrl
         }
     }
 
 
     companion object {
 
-        var EXTRA_TITLE = "extra_title"
+        var EXTRA_PHOTOGRAPHER_URL = "extra_photographer_url"
         var EXTRA_PHOTOGRAPHER = "extra_photographer"
         var EXTRA_IMAGE_URI = "extra_image_uri"
 

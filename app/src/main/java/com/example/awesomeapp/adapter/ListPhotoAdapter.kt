@@ -10,9 +10,11 @@ import com.example.awesomeapp.data.model.Photo
 import java.util.*
 import kotlin.collections.ArrayList
 
+//Adapter untuk recyclerview apabila tampilan
+//dalam mode List
 class ListPhotoAdapter : RecyclerView.Adapter<ListPhotoAdapter.ListViewHolder>() {
     private var onItemClickCallback: OnItemClickCallback? = null
-    private var listPhoto = ArrayList<Photo>()
+    var listPhoto = ArrayList<Photo>()
 
     fun setData(items: ArrayList<Photo>) {
         listPhoto.clear()
@@ -34,13 +36,9 @@ class ListPhotoAdapter : RecyclerView.Adapter<ListPhotoAdapter.ListViewHolder>()
                         .load(photo.src.medium)
                         .diskCacheStrategy(DiskCacheStrategy.DATA)
                         .into(ivRowItem)
-                val title = photo.url
-                val titleRemovedPrexix = title.replace("https://www.pexels.com/photo/", "")
-                val titleRemovedId = titleRemovedPrexix.replace(photo.id.toString() + "/", "")
-                val titleFormatted = titleRemovedId.replace("-", " ").capitalize(Locale.ROOT)
-                tvRowItem.text = titleFormatted
+                tvRowItem.text = photo.photographer
                 itemView.setOnClickListener {
-                    onItemClickCallback?.onItemClicked(photo, titleFormatted)
+                    onItemClickCallback?.onItemClicked(photo)
                 }
             }
         }
@@ -58,6 +56,6 @@ class ListPhotoAdapter : RecyclerView.Adapter<ListPhotoAdapter.ListViewHolder>()
     override fun getItemCount(): Int = listPhoto.size
 
     interface OnItemClickCallback {
-        fun onItemClicked(data: Photo, title: String)
+        fun onItemClicked(data: Photo)
     }
 }

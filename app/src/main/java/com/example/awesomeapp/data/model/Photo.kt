@@ -3,17 +3,19 @@ package com.example.awesomeapp.data.model
 import com.google.gson.annotations.SerializedName
 
 data class Photo(
-        @SerializedName("id")
+    @SerializedName("id")
     var id: Int,
-        @SerializedName("url")
+    @SerializedName("url")
     var url: String,
-        @SerializedName("photographer")
+    @SerializedName("photographer")
     var photographer: String,
-        @SerializedName("src")
+    @SerializedName("photographer_url")
+    var photographerUrl: String,
+    @SerializedName("src")
     var src: Source,
-        @SerializedName("avg_color")
+    @SerializedName("avg_color")
     var avgColor: String,
-){
+) {
     class Source(
         @SerializedName("original")
         var original: String,
